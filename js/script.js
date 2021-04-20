@@ -7,6 +7,8 @@ snake[0] = {
     y: 8 * box
 }
 
+let direcao = "right";
+
 function criarBg(){
     context.fillStyle = 'lightgreen';
     context.fillRect(0, 0, 16 * box, 16 * box); //Desenha o retângulo onde vai acontecer o jogo.
@@ -19,5 +21,37 @@ function criarCobrinha(){
     }
 }
 
-criarBg();
-criarCobrinha();
+function iniciarJogo(){
+    criarBg();
+    criarCobrinha();
+
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
+
+    if(direcao == "right"){
+        snakeX += box; 
+    }
+
+    if(direcao == "left"){
+        snakeX -= box; 
+    }
+
+    if(direcao == "up"){
+        snakeY -= box; 
+    }
+
+    if(direcao == "down"){
+        snakeY += box; 
+    }
+
+    snake.pop();
+
+    let newHead = {
+        x: snakeX,
+        y: snakeY
+    }
+
+    snake.unshift(newHead);
+}
+
+let jogo = setInterval(iniciarJogo, 100); //Iniciar o jogo a cada 100 milisegggggtgt
