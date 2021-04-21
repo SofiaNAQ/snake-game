@@ -7,6 +7,8 @@ snake[0] = {
     y: 8 * box
 }
 
+let pontos = 0;
+
 let direcao = "right";
 let food = {
     x: Math.floor(Math.random() * 15 + 1) * box,
@@ -14,19 +16,19 @@ let food = {
 }
 
 function criarBg(){
-    context.fillStyle = 'lightgreen';
+    context.fillStyle = '#080d0d';
     context.fillRect(0, 0, 16 * box, 16 * box); //Desenha o retângulo onde vai acontecer o jogo.
 }
 
 function criarCobrinha(){
     for (i = 0; i < snake.length; i ++){
-        context.fillStyle = "green";
+        context.fillStyle = "#11d147";
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
 }
 
 function drawFood(){
-    context.fillStyle = 'red';
+    context.fillStyle = '#d60e0a';
     context.fillRect(food.x, food.y, box, box);
 }
 
@@ -49,7 +51,8 @@ function iniciarJogo(){
     for(i = 1; i < snake.length; i++){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
             clearInterval(jogo);
-            alert('Game Over! :(')
+            alert('Game Over! :(');
+            location.reload()
         } 
     }
 
@@ -97,3 +100,7 @@ function iniciarJogo(){
 }
 
 let jogo = setInterval(iniciarJogo, 100); //Iniciar o jogo a cada 100 milisegggggtgt
+
+function reset(){
+    location.reload()
+}
