@@ -8,6 +8,10 @@ snake[0] = {
 }
 
 let direcao = "right";
+let food = {
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box
+}
 
 function criarBg(){
     context.fillStyle = 'lightgreen';
@@ -21,30 +25,60 @@ function criarCobrinha(){
     }
 }
 
+function drawFood(){
+    context.fillStyle = 'red';
+    context.fillRect(food.x, food.y, box, box);
+}
+
+document.addEventListener('keydown', update);
+
+function update(event){
+    if(event.keyCode == 37 && direcao != 'right')direcao = 'left';
+    if(event.keyCode == 38 && direcao != 'down')direcao = 'up';
+    if(event.keyCode == 39 && direcao != 'left')direcao = 'right';
+    if(event.keyCode == 40 && direcao != 'up')direcao = 'down';
+}
+
 function iniciarJogo(){
+
+    if(snake[0].x > 15 * box && direcao == 'right') snake[0].x = 0;
+    if(snake[0].x < 0 && direcao == 'left') snake[0].x = 16 * box;
+    if(snake[0].y > 15 * box && direcao == 'down') snake[0].y = 0;
+    if(snake[0].y < 0 && direcao == 'up') snake[0].y = 16 * box;
     criarBg();
     criarCobrinha();
+    drawFood();
 
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
-    if(direcao == "right"){
-        snakeX += box; 
-    }
+    /*switch(direcao){
+        case "right":
+            snakeX += box;
+            break;
+        case "left":
+            snakeX -= box;
+            break;
+        case 'up':
+            snakeY -= box;
+            break;
+        case 'down':
+            snakeY += box;
+            break;
+    }*/
 
-    if(direcao == "left"){
-        snakeX -= box; 
-    }
+    if(direcao == "right")snakeX += box; 
+    if(direcao == "left")snakeX -= box; 
+    if(direcao == "up")snakeY -= box; 
+    if(direcao == "down")snakeY += box; 
 
-    if(direcao == "up"){
-        snakeY -= box; 
+    if(snakeX != food.x || snakeY != food.y){
+        snake.pop();
     }
-
-    if(direcao == "down"){
-        snakeY += box; 
+    else{
+        food.x = Math.floor(Math.random() * 15 + 1) * box;
+        food.y = Math.floor(Math.random() * 15 + 1) * box;
     }
-
-    snake.pop();
 
     let newHead = {
         x: snakeX,
